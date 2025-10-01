@@ -4,22 +4,46 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from flask import Flask, request, jsonify, render_template
+
 import pandas as pd
 from src.preprocessing import filter_data
 from src.collaborative_filtering import train_svd_model
 from src.topn_recommendation import get_top_n
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder='templates',
+    static_folder='static',
+    static_url_path='/static',
+)
 
-# Carga los ratings y metadatos de películas
+# Auto-reload plantillas y sin caché en dev
+app.config.update(
+    TEMPLATES_AUTO_RELOAD=True,
+    SEND_FILE_MAX_AGE_DEFAULT=0,
+)
+app.jinja_env.auto_reload = True
+
+# Versión de assets para bustear caché del navegador
+@app.context_processor
+def inject_asset_version():
+    try:
+        v = int(os.path.getmtime(os.path.join(app.static_folder, 'styles.css')))
+    except Exception:
+        v = 1
+    return {'asset_v': v}
+
+@app.after_request
+def no_cache(resp):
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    resp.headers['Pragma'] = 'no-cache'
+    return resp
+
+# Datos
 ratings = pd.read_csv("../data/ratings.csv")
 movies_df = pd.read_csv("../data/movies.csv")
 movie_id_to_title = dict(zip(movies_df["movieId"], movies_df["title"]))
-
-# Filtra los datos para acelerar el entrenamiento
 filtered_ratings = filter_data(ratings, min_user_ratings=20, min_movie_ratings=50)
-
-# Entrena el modelo con datos filtrados y calcula Top-N
 model, predictions = train_svd_model(filtered_ratings)
 top_n = get_top_n(predictions, n=5)
 

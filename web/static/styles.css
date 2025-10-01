@@ -1,0 +1,73 @@
+/* Netflix-like dark theme */
+:root {
+  --nf-bg-top: #0f0f0f;
+  --nf-bg-bottom: #141414;
+  --nf-surface: #181818;
+  --nf-border: #2a2a2a;
+  --nf-text: #ffffff;
+  --nf-text-muted: #b3b3b3;
+  --nf-red: #e50914;
+  --nf-red-hover: #b20710;
+  --nf-red-focus: rgba(229, 9, 20, 0.35);
+}
+
+body {
+  color-scheme: dark;
+  color: var(--nf-text);
+  background: linear-gradient(180deg, var(--nf-bg-top), var(--nf-bg-bottom));
+}
+
+/* Navbar en oscuro aunque tenga bg-white en el markup */
+.navbar.bg-white {
+  background-color: var(--nf-surface) !important;
+  border-color: var(--nf-border) !important;
+}
+.navbar-brand { color: var(--nf-text); font-size: 1.25rem; }
+
+/* Tarjetas y listas */
+.card {
+  background-color: var(--nf-surface);
+  border-radius: 14px;
+  color: var(--nf-text);
+}
+.list-group-item {
+  background-color: var(--nf-surface);
+  border-color: var(--nf-border);
+  padding: .9rem 1rem;
+  color: var(--nf-text);
+}
+
+/* Inputs en modo oscuro */
+.form-control {
+  background-color: #0f0f0f;
+  border: 1px solid var(--nf-border);
+  color: var(--nf-text);
+}
+.form-control::placeholder { color: var(--nf-text-muted); }
+.form-control:focus {
+  background-color: #0f0f0f;
+  border-color: var(--nf-red);
+  box-shadow: 0 0 0 .25rem var(--nf-red-focus);
+  color: var(--nf-text);
+}
+
+/* Botón primario rojo Netflix */
+.btn-primary {
+  background-color: var(--nf-red);
+  border-color: var(--nf-red);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--nf-red-hover);
+  border-color: var(--nf-red-hover);
+}
+.btn-primary:focus { box-shadow: 0 0 0 .25rem var(--nf-red-focus); }
+.btn-link { color: var(--nf-red); }
+.btn-link:hover { color: #ff0f1a; }
+
+/* Badge de score en rojo */
+.badge.bg-success-subtle { background-color: rgba(229, 9, 20, 0.15); }
+.text-success-emphasis { color: var(--nf-red); }
+
+/* Detalles de tono */
+.text-muted { color: var(--nf-text-muted) !important; }

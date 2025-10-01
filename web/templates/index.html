@@ -1,44 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Movie Recommendation Interface</title>
-    <style>
-      body { font-family: "Segoe UI", sans-serif; margin: 50px; line-height: 1.6; }
-      input { width: 300px; padding: 8px; font-size: 1.1em; }
-      button { font-size: 1.1em; cursor: pointer; background-color: #007bff; color: white; border: none; padding: 10px 15px; margin-top: 8px; }
-      button:hover { background-color: #0056b3; }
-      .results { margin-top: 30px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; }
-    </style>
-    <script>
-      async function getRecommendations(event) {
-        event.preventDefault();
-        const userId = document.getElementById("userId").value.trim();
-        const output = document.querySelector(".results");
-        output.innerHTML = "Cargando...";
-        try {
-          const response = await fetch(`/api/recommend?userId=${encodeURIComponent(userId)}`);
-          const data = await response.json();
-          const listHtml = (data.recommendations || [])
-            .map((rec) => `<li>${rec.movieTitle} — Score: ${rec.score}</li>`)
-            .join("");
-          output.innerHTML = (data.recommendations && data.recommendations.length > 0)
-            ? `<h2>Recommended Movies</h2><ul>${listHtml}</ul>`
-            : "<p>No recommendations found for this user.</p>";
-        } catch (e) {
-          output.innerHTML = "<p style='color:red;'>Error obteniendo recomendaciones.</p>";
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <h1>🎬 Intelligent Movie Recommender</h1>
-    <form onsubmit="getRecommendations(event)">
-      <label for="userId">Enter User ID:</label><br />
-      <input type="text" id="userId" name="userId" required />
-      <br />
-      <button type="submit">Generate Recommendations</button>
-    </form>
-    <div class="results"></div>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h2 class="h4 mb-4">Obtén recomendaciones</h2>
+        <form id="recoForm" class="row g-3 align-items-end" onsubmit="getRecommendations(event)">
+          <div class="col-sm-6">
+            <label for="userId" class="form-label">ID de usuario</label>
+            <input id="userId" name="userId" type="number" min="1" required class="form-control form-control-lg" placeholder="Ej. 1" />
+          </div>
+          <div class="col-sm-auto">
+            <button class="btn btn-primary btn-lg px-4" type="submit">Generar recomendaciones</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mt-4 d-none" id="resultsCard">
+      <div class="card-body p-4">
+        <h3 class="h5 mb-3">Películas recomendadas</h3>
+        <div id="resultsContent" class="text-muted">Cargando...</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function getRecommendations(event) {
+  event.preventDefault();
+  const userId = document.getElementById("userId").value.trim();
+  const card = document.getElementById("resultsCard");
+  const content = document.getElementById("resultsContent");
+  card.classList.remove("d-none");
+  content.innerHTML = "Cargando...";
+  try {
+    const res = await fetch(`/api/recommend?userId=${encodeURIComponent(userId)}`);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const recs = Array.isArray(data.recommendations) ? data.recommendations : [];
+    if (recs.length === 0) {
+      content.innerHTML = "<p>No se encontraron recomendaciones para este usuario.</p>";
+      return;
+    }
+    const list = recs.map(r => (
+      `<li class="list-group-item d-flex justify-content-between align-items-center">
+         <span>${r.movieTitle}</span>
+         <span class="badge bg-success-subtle text-success-emphasis rounded-pill">Score: ${Number(r.score).toFixed(2)}</span>
+       </li>`
+    )).join("");
+    content.innerHTML = `<ul class="list-group list-group-flush">${list}</ul>`;
+  } catch (e) {
+    content.innerHTML = "<p class='text-danger'>Error obteniendo recomendaciones.</p>";
+  }
+}
+</script>
+{% endblock %}

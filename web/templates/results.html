@@ -1,30 +1,33 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Recommendations</title>
-    <style>
-      body { font-family: "Segoe UI", sans-serif; margin: 50px; line-height: 1.6; }
-      li { margin: 6px 0; }
-    </style>
-  </head>
-  <body>
-    <h1>🎥 Your Movie Recommendations</h1>
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h1 class="h5 mb-3">🎥 Tus recomendaciones</h1>
 
-    {% if recommendations and recommendations|length > 0 %}
-      <ul>
-        {% for movie in recommendations %}
-          <li>{{ movie.movieTitle }} — Score: {{ "%.2f"|format(movie.score) }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No recommendations found for this user.</p>
-    {% endif %}
+        {% if error %}
+          <p class="text-danger">{{ error }}</p>
+        {% endif %}
 
-    {% if error %}
-      <p style="color:red;">{{ error }}</p>
-    {% endif %}
+        {% if recommendations and recommendations|length > 0 %}
+          <ul class="list-group list-group-flush">
+            {% for m in recommendations %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ m.movieTitle }}</span>
+                <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                  Score: {{ "%.2f"|format(m.score) }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted mb-0">No se encontraron recomendaciones para este usuario.</p>
+        {% endif %}
 
-    <a href="/">⬅ Back</a>
-  </body>
-</html>
+        <a class="btn btn-link mt-3 px-0" href="/">⬅ Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
