@@ -1,48 +1,47 @@
-# 🎬 Intelligent Movie Recommender System
+# 🎬 Sistema Inteligente de Recomendación de Películas
 
-A personalized movie recommendation engine powered by collaborative filtering using **SVD** (via `surprise` library) and a lightweight Flask frontend. Built as a hands-on AI project and synced with the blog:  
-👉 [Read the full article](https://dchobarkar.github.io/2024/09/21/hands-on-build-a-movie-recommender-in-python.html)
+Un motor de recomendación de películas personalizado impulsado por filtrado colaborativo usando **SVD** (mediante la biblioteca `surprise`) y un frontend ligero en Flask. Construido como un proyecto práctico de IA y sincronizado con el blog:  
+👉 [Lee el artículo completo](https://dchobarkar.github.io/2024/09/21/hands-on-build-a-movie-recommender-in-python.html)
 
-## 🚀 Live Demo
+## 🚀 Demo en vivo
 
-👉 [Try it on Render](https://movie-recommender-python-ehrd.onrender.com)
+👉 [Pruébalo en Render](https://movie-recommender-python-ehrd.onrender.com)
 
-> Enter a `User ID` (like `1`, `10`, or `20`) and get a list of top-rated movie recommendations.
+> Ingresa un `User ID` (como `1`, `10` o `20`) y obtén una lista de recomendaciones de películas mejor valoradas.
 
-## 📦 Features
+## 📦 Características
 
-- 📊 Collaborative filtering with matrix factorization (SVD)
-- 🎯 Predicts top-N movies per user with scores
-- 🧠 Smart content-based fallback for title mapping
-- 🌐 Deployed on Render with live web interface
-- 🧪 Fully blog-synced — write as you build!
+- 📊 Filtrado colaborativo con factorización matricial (SVD)
+- 🎯 Predice top‑N películas por usuario con puntajes
+- 🧠 Respaldo inteligente basado en contenido para el mapeo de títulos
+- 🌐 Desplegado en Render con interfaz web en vivo
+- 🧪 Totalmente sincronizado con el blog — escribe mientras construyes
 
-## 🛠️ Tech Stack
+## 🛠️ Tecnologías
 
 - Python 3.11
 - Flask
-- scikit-surprise
+- scikit‑surprise
 - pandas / NumPy / Matplotlib
-- HTML / CSS (Jinja templates)
-- Render (cloud deployment)
+- HTML / CSS (plantillas Jinja)
+- Render (despliegue en la nube)
 
-## 📁 Project Structure
+## 📁 Estructura del proyecto
 
-```
-movie-recommender-python/
-├── data/                   # ratings.csv, movies.csv
-├── notebooks/              # EDA and preprocessing notebooks
-├── src/                    # Modular Python scripts
-├── web/                    # Flask app + templates
-│   ├── app.py
-│   └── templates/
-├── requirements.txt
-└── README.md
-```
+    movie-recommender-python/
+    ├── data/                   # ratings.csv, movies.csv
+    ├── notebooks/              # EDA y cuadernos de preprocesamiento
+    ├── src/                    # Scripts Python modulares
+    ├── web/                    # App Flask + plantillas
+    │   ├── app.py
+    │   └── templates/
+    │   └── static/
+    ├── requirements.txt
+    └── README.md
 
-## 🧪 Sample User IDs
+## 🧪 IDs de ejemplo
 
-Try the following user IDs to explore recommendations:
+Prueba los siguientes `User ID` para explorar recomendaciones:
 
 - `1`
 - `10`
@@ -50,41 +49,42 @@ Try the following user IDs to explore recommendations:
 - `50`
 - `75`
 
-## ⚙️ How to Run
+## ⚙️ Cómo ejecutar
 
-### 1. Install dependencies
+### 1. Instalar dependencias
 
-```bash
-pip install -r requirements.txt
-```
+    pip install -r requirements.txt
 
-### 2. Start the Flask app
+### 2. Iniciar la app Flask
 
-```bash
-cd web
-python app.py
-```
+    cd web
+    python app.py
 
-Then open your browser at [http://127.0.0.1:5000](http://127.0.0.1:5000)
+Luego abre tu navegador en [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-## 🧪 Try the API
+## 🧪 Probar la API
 
-```bash
-curl http://127.0.0.1:5000/api/recommend?userId=1
-```
+    curl http://127.0.0.1:5000/api/recommend?userId=1
 
-## 📚 Dataset Source
+## 📚 Fuente del dataset
 
 MovieLens 100K  
 [https://grouplens.org/datasets/movielens/100k](https://grouplens.org/datasets/movielens/100k)
 
-## 📝 License
+## 📝 Licencia
 
 MIT License
 
-Made with ❤️ by [Darshan Jitendra Chobarkar](https://darshanwebdev.com)
+Hecho con ❤️ por [Darshan Jitendra Chobarkar](https://darshanwebdev.com)
 
-## 💡 Author
+## 💡 Autor
 
-Built by [Darshan Chobarkar](https://github.com/dchobarkar)  
-Inspired by [this blog post](https://dchobarkar.github.io/2024/09/21/hands-on-build-a-movie-recommender-in-python.html)
+Creado por [Darshan Chobarkar](https://github.com/dchobarkar)  
+Inspirado por [esta publicación del blog](https://dchobarkar.github.io/2024/09/21/hands-on-build-a-movie-recommender-in-python.html)
+
+## 📄 Nota de adaptación
+
+Cabe destacar que este ejemplo es una adaptación de un repositorio ya existente en GitHub: Movie‑Recommender‑System. Lo adapté para que fuera más sencillo de ejecutar y poder usarlo en este proyecto de Lógica y representación III.
+
+La versión ajustada está disponible en mi propio repositorio: proyecto‑logYrepresentacionIII  
+https://github.com/Joselito17821/proyecto-logYrepresentacionIII
